@@ -1,0 +1,18 @@
+[
+  {
+    "AWD": false,"speed":90, "brand_model":"toyota camry",
+    "fuel_consumption": 8, "power": 170, "acceleration": 2.5
+    
+  },
+   {
+    "AWD": true,"speed": 82, "brand_model":"Nissan Rog",
+    "fuel_consumption": 10, "power": 192, "acceleration": 1.7
+    
+  },
+  {
+    "AWD": false,"speed": 80, "brand_model":"Ford Focus",
+    "fuel_consumption": 7, "power": 140, "acceleration": 2.0
+  }
+
+
+]

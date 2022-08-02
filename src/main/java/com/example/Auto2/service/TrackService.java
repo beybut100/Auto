@@ -1,16 +1,20 @@
 package com.example.Auto2.service;
 
 import com.example.Auto2.dto.car.Auto;
+import com.example.Auto2.dto.road.Road;
 import com.example.Auto2.dto.road.Road_Object;
 import com.example.Auto2.dto.road.Turn;
 import com.example.Auto2.dto.road.Straightroad;
 import com.example.Auto2.dto.track.Commands;
-import com.example.Auto2.dto.track.Dashboard;
 import com.example.Auto2.dto.track.Features;
+import com.example.Auto2.dto.track.Indicates;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class Treck {
+@Service
+public class TrackService {
  //  com.example.Auto2.dto.road.Road a = new com.example.Auto2.dto.road.Road();
     ArrayList<Road_Object> road = new ArrayList<>();
 
@@ -242,49 +246,59 @@ public class Treck {
     }
 
 
-    public Features MainRegulare(Auto a ) throws Exception {
+    public Indicates MainRegulare(Auto a, Road r ) throws Exception {
+        FirstDaSH=new RecordsOfTrack();
+    ArrayList<Road_Object> roadItems =r.getRoad();
     Features Initial=null;
     Commands Forturn=new Commands(true);
     Commands WithoutTurn=new Commands(false);
     String ChosenStategy=GetStrategy();
     System.out.println("System randomly chose "+ChosenStategy);
-    for(int i=0;i<road.size(); i++) {
-        if(road.size()==1) {
-            Initial = FirstStage(a, road.get(0), ChosenStategy, WithoutTurn);
+    for(int i = 0; i< roadItems.size(); i++) {
+        if(roadItems.size()==1) {
+            Initial = FirstStage(a, roadItems.get(0), ChosenStategy, WithoutTurn);
         }
-        if (i <= road.size() - 2) {
-            if (road.get(i + 1).getClass() != Turn.class && road.get(i).getClass() == Straightroad.class) {
+        if (i <= roadItems.size() - 2) {
+            if (roadItems.get(i + 1).getClass() != Turn.class && roadItems.get(i).getClass() == Straightroad.class) {
                 if (i == 0) {
-                    Initial = FirstStage(a, road.get(0), ChosenStategy, WithoutTurn);
-                } else if (i == road.size() - 1) {
-                    Initial = LongDistanceAvS(Initial, a, road.get(i), WithoutTurn, ChosenStategy);
+                    Initial = FirstStage(a, roadItems.get(0), ChosenStategy, WithoutTurn);
+                } else if (i == roadItems.size() - 1) {
+                    Initial = LongDistanceAvS(Initial, a, roadItems.get(i), WithoutTurn, ChosenStategy);
                 } else {
-                    Initial = LongDistanceAvS(Initial, a, road.get(i), WithoutTurn, ChosenStategy);
+                    Initial = LongDistanceAvS(Initial, a, roadItems.get(i), WithoutTurn, ChosenStategy);
                 }
             }
-            if (road.get(i + 1).getClass() == Turn.class && road.get(i).getClass() == Straightroad.class) {
+            if (roadItems.get(i + 1).getClass() == Turn.class && roadItems.get(i).getClass() == Straightroad.class) {
                 if (i == 0) {
-                    Initial = FirstStage(a, road.get(0), ChosenStategy, Forturn);
+                    Initial = FirstStage(a, roadItems.get(0), ChosenStategy, Forturn);
                 } else {
-                    Initial = LongDistanceAvS(Initial, a, road.get(i), Forturn, ChosenStategy);
+                    Initial = LongDistanceAvS(Initial, a, roadItems.get(i), Forturn, ChosenStategy);
                 }
             }
         }
-        else if (i==(road.size() - 1)&&i!=0){
-        if(road.get(i).getClass()== Straightroad.class) {
-            Initial = LongDistanceAvS(Initial, a, road.get(i), WithoutTurn, ChosenStategy);
+        else if (i==(roadItems.size() - 1)&&i!=0){
+        if(roadItems.get(i).getClass()== Straightroad.class) {
+            Initial = LongDistanceAvS(Initial, a, roadItems.get(i), WithoutTurn, ChosenStategy);
         }
             }
         }
-        FirstDaSH.ShowIndicates();
-        return Initial;
+    //FirstDaSH.ShowIndicates();
+        return new Indicates(Initial,FirstDaSH.getAllIndicates());
 
 
     };
-
-    public Treck(ArrayList<Road_Object> road) {
-        this.road = road;
+    public List<Indicates> Simualation(List<Auto> selectedcars,Road road) throws Exception {
+    List<Indicates> results=new ArrayList<>();
+        for(int i=0; i<selectedcars.size(); i++) {
+        results.add(MainRegulare(selectedcars.get(i),road));
+        }
+        return results;
     }
+
+    public TrackService() {
+
+    }
+
 
 
 }

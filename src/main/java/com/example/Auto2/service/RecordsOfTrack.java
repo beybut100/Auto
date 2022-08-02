@@ -1,15 +1,21 @@
 package com.example.Auto2.service;
 
 import com.example.Auto2.dto.track.Dashboard;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class RecordsOfTrack {
     private List<Dashboard> AllIndicates = new ArrayList<>();
 
     public void RecordIndicates (int distance, double speed) {
         AllIndicates.add(new Dashboard(speed,distance));
+    }
+
+    public List<Dashboard> getAllIndicates() {
+        return AllIndicates;
     }
 
     public void ShowIndicates() throws Exception {

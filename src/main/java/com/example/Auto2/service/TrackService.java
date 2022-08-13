@@ -19,6 +19,7 @@ public class TrackService {
     ArrayList<Road_Object> road = new ArrayList<>();
 
     RecordsOfTrack FirstDaSH;
+    FuelService fuelService;
 
     public String GetStrategy() {
         String strategy;
@@ -75,17 +76,16 @@ public class TrackService {
         float TimeBefore = (float) previous.getTimeinSec();
         int DistanceBefore = previous.getPassedDistance();
 
-// We take distance below;
         for (int i = 0; i < spec.getLengthinmeters(); i++) {
             if (starspeed > auto.speed - 0.1 * auto.speed || starspeed < auto.speed + 0.1 * auto.speed) {
                 starspeed *= DeviationKof(i);
-        //        System.out.println(starspeed);
+
             } else {
                 throw new Exception();
             }
             DistanceBefore++;
             TimeBefore += 1 / (starspeed * 1000 / 3600);
-      //      System.out.println(TimeBefore);
+
         }
         return new Features(DistanceBefore, starspeed, TimeBefore);
     }
@@ -283,20 +283,23 @@ public class TrackService {
             }
         }
     //FirstDaSH.ShowIndicates();
-        return new Indicates(Initial,FirstDaSH.getAllIndicates());
+        return new Indicates(Initial,FirstDaSH.getAllIndicates(),a);
 
 
     };
+
+
     public List<Indicates> Simualation(List<Auto> selectedcars,Road road) throws Exception {
     List<Indicates> results=new ArrayList<>();
         for(int i=0; i<selectedcars.size(); i++) {
-        results.add(MainRegulare(selectedcars.get(i),road));
+        Indicates oneelem=MainRegulare(selectedcars.get(i),road);
+             results.add(oneelem);
+            fuelService.indicates.add(oneelem);
         }
         return results;
     }
-
-    public TrackService() {
-
+    public TrackService(FuelService fuelService) {
+        this.fuelService=fuelService;
     }
 
 

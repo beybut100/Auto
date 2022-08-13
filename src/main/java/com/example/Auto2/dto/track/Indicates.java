@@ -1,11 +1,22 @@
 package com.example.Auto2.dto.track;
 
+import com.example.Auto2.dto.car.Auto;
+
 import java.util.List;
 
 public class Indicates {
 
     Features features;
     List<Dashboard> dashboard;
+    Auto auto;
+
+    public Auto getAuto() {
+        return auto;
+    }
+
+    public void setAuto(Auto auto) {
+        this.auto = auto;
+    }
 
     public Features getFeatures() {
         return features;
@@ -23,8 +34,9 @@ public class Indicates {
         this.dashboard = dashboard;
     }
 
-    public Indicates(Features features, List<Dashboard> dashboard) {
+    public Indicates(Features features, List<Dashboard> dashboard,Auto auto) {
         this.features = features;
         this.dashboard = dashboard;
+        this.auto=auto;
     }
 }

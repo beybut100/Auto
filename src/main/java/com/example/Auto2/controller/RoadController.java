@@ -5,7 +5,6 @@ import com.example.Auto2.dto.road.*;
 import com.example.Auto2.dto.user.SessionNotFound;
 import com.example.Auto2.service.RoadService;
 import com.example.Auto2.service.UserService;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,14 +14,14 @@ public class RoadController {
     UserService userService;
 
 @RequestMapping(value="/create",headers = "Session" )
-public void Create(@RequestHeader(name="Session") String id) throws SessionNotFound {
+public void Create(@RequestHeader(name="Session") Integer id) throws SessionNotFound {
     if(!userService.IsExistSession(id)) {
         throw new SessionNotFound("Session not found");
     }
     roadService.CreateInitialRoad(id);
 }
 @RequestMapping(value="/getroad",headers = "Session" )
-public Road GetRoad(@RequestHeader(name="Session")String id) throws SessionNotFound, RoadNotFound {
+public Road GetRoad(@RequestHeader(name="Session") Integer id) throws SessionNotFound, RoadNotFound {
     if(!userService.IsExistSession(id)) {
         throw new SessionNotFound("Session not found");
     }
@@ -30,7 +29,7 @@ public Road GetRoad(@RequestHeader(name="Session")String id) throws SessionNotFo
 }
 
 @RequestMapping(value="/addelement",headers = "Session")
-public void AddElement(@RequestHeader(name="Session")String id, @RequestBody AddRoadObject add) {
+public void AddElement(@RequestHeader(name="Session") Integer id, @RequestBody AddRoadObject add) {
     if(add.getTypeofroadobj().equals("straightroad")) {
         roadService.Addelement(id,new Straightroad(add.getLengthinmeters()));
     }

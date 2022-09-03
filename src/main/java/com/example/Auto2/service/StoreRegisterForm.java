@@ -1,7 +1,7 @@
 package com.example.Auto2.service;
 
 import com.example.Auto2.dao.LoginPasswords;
-import com.example.Auto2.dao.Sessions;
+import com.example.Auto2.dao.SessionPst;
 import com.example.Auto2.dao.Users;
 import com.example.Auto2.dto.user.Location;
 import com.example.Auto2.dto.user.Registration.*;
@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 public class StoreRegisterForm {
     LoginPasswords logpassRepository;
     Hashing hashing;
-    Sessions sessionsRepository;
+    SessionPst sessionsRepository;
     Users users;
 
 
@@ -98,16 +98,16 @@ public class StoreRegisterForm {
             System.out.println("Password doen't match");
             throw new IncorrectPassword("Password doen't match");
         }
-             return  sessionsRepository.insert(new Session(login));
+             return  sessionsRepository.save(new Session(login));
         }
 
-        public void CloseSession(String id) {
+        public void CloseSession(Integer id) {
         Session elem=sessionsRepository.findById(id).get();
         elem.setFinishtime(new Date(System.currentTimeMillis()));
          sessionsRepository.save(elem);
 
         }
-        public void SetLocation(String id, Location location) throws SessionNotFound {
+        public void SetLocation(Integer id, Location location) throws SessionNotFound {
         Optional<Session> elem=sessionsRepository.findById(id);
          if(elem.isEmpty()){
              throw new SessionNotFound("Not found session in db");
@@ -115,16 +115,16 @@ public class StoreRegisterForm {
          Session upelem= elem.get();
 
          upelem.setLocation(location);
-         sessionsRepository.save(upelem);
+         sessionsRepository.(upelem);
         }
         public void DeleteOldSessions(int seconds) {
             Date timetodelete=new Date(System.currentTimeMillis()-seconds*1000);
-            sessionsRepository.deleteByFinishtimeLessThan(timetodelete);
+        //    sessionsRepository.deleteByFinishtimeLessThan(timetodelete);
         }
 
 
 @Autowired
-public StoreRegisterForm(LoginPasswords logpassRepository,Sessions sessionsRepository ) throws NoSuchAlgorithmException, InvalidPassword, InvalidLogin  {
+public StoreRegisterForm(LoginPasswords logpassRepository,SessionPst sessionsRepository ) throws NoSuchAlgorithmException, InvalidPassword, InvalidLogin  {
         this.logpassRepository = logpassRepository;
         this.sessionsRepository=sessionsRepository;
         this.users=users;

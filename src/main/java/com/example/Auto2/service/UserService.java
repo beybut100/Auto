@@ -1,6 +1,6 @@
 package com.example.Auto2.service;
 
-import com.example.Auto2.dao.Sessions;
+import com.example.Auto2.dao.SessionPst;
 import com.example.Auto2.dao.Users;
 import com.example.Auto2.dto.user.*;
 import org.springframework.stereotype.Service;
@@ -11,9 +11,9 @@ import java.util.Optional;
 @Service
 public class UserService {
     Users repository;
-    Sessions sessionrepository;
+    SessionPst sessionrepository;
 
-    public User SaveUserData(String sessionid, String email) throws SessionNotFound, LocationNotDetectedException {
+    public User SaveUserData(Integer sessionid, String email) throws SessionNotFound, LocationNotDetectedException {
       Optional<Session> sessionbyid= sessionrepository.findById(sessionid);
      if(sessionbyid.isEmpty()) {
        throw  new SessionNotFound("not found session");
@@ -27,15 +27,15 @@ public class UserService {
     }
 
 
-    public Sessions getSessionrepository() {
+    public SessionPst getSessionrepository() {
         return sessionrepository;
     }
 
-    public void setSessionrepository(Sessions sessionrepository) {
+    public void setSessionrepository(SessionPst sessionrepository) {
         this.sessionrepository = sessionrepository;
     }
 
-    public UserService(Users repository, Sessions sessionrepository) {
+    public UserService(Users repository, SessionPst sessionrepository) {
         this.repository = repository;
         this.sessionrepository = sessionrepository;
     }
@@ -48,7 +48,7 @@ public class UserService {
         this.repository = repository;
     }
 
-    public boolean IsExistSession(String id) {
+    public boolean IsExistSession(Integer id) {
 
     return sessionrepository.existsById(id);
     }

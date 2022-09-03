@@ -15,19 +15,19 @@ import java.util.Optional;
 @Service
 public class AutoService {
     AutosList autorepository;
-    Map<String, ArrayList<Auto>> selectedcars=new HashMap<>();
+    Map<Integer, ArrayList<Auto>> selectedcars=new HashMap<Integer, ArrayList<Auto>>();
 
-     public void CreateCollectionofCars(String id) {
+     public void CreateCollectionofCars(Integer id) {
          selectedcars.put(id,new ArrayList<Auto>());
      }
      public void ClearCollection() {
             selectedcars.clear();
      }
 
-     public ArrayList<Auto> GetCars(String id) {
+     public ArrayList<Auto> GetCars(Integer id) {
      return     selectedcars.get(id);
      }
-     public void CreateNewAuto(InfoForAuto info,String id) {
+     public void CreateNewAuto(InfoForAuto info, Integer id) {
 
      Auto addedauto= new Auto(info.getSpeed(), info.getPower(), info.getFuelСonsumption(), info.isAWD(), info.getSizeofVehicleBase(),info.getPrice(),info.getAcceleration(),info.getBrandModel());
      if (selectedcars.containsKey(id)) {

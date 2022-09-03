@@ -2,18 +2,13 @@ package com.example.Auto2.controller;
 
 import com.example.Auto2.dto.car.Auto;
 import com.example.Auto2.dto.road.Road;
-import com.example.Auto2.dto.road.RoadNotFound;
-import com.example.Auto2.dto.track.Features;
-import com.example.Auto2.dto.track.FuelConsumption;
 import com.example.Auto2.dto.track.Indicates;
 import com.example.Auto2.dto.user.SessionNotFound;
 import com.example.Auto2.service.*;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.sound.midi.Track;
 import java.util.List;
 
 @RestController
@@ -25,7 +20,7 @@ public class TrackController {
     AutoService autoService;
     FuelService fuelService;
  @RequestMapping(path="simulation",headers = "Session")
- public List<Indicates> Simulation(@RequestHeader(name="Session") String id) throws Exception {
+ public List<Indicates> Simulation(@RequestHeader(name="Session") Integer id) throws Exception {
      if(!userService.IsExistSession(id)) {
          throw new SessionNotFound("Session not found");
      }
@@ -37,7 +32,7 @@ public class TrackController {
  }
 
  @RequestMapping(path="getfuel",headers = "Session")
-    public List<Object> GetFuel(@RequestHeader(name="Session") String id) throws Exception {
+    public List<Object> GetFuel(@RequestHeader(name="Session") Integer id) throws Exception {
         if(!userService.IsExistSession(id)) {
             throw new SessionNotFound("Session not found");
         }

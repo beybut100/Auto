@@ -5,23 +5,22 @@ import com.example.Auto2.dto.road.RoadNotFound;
 import com.example.Auto2.dto.road.Road_Object;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class RoadService {
 
-    Map<String, Road> usersroad=new HashMap<>();
+    Map<Integer, Road> usersroad=new HashMap<>();
 
- public void CreateInitialRoad(String id) {
+ public void CreateInitialRoad(Integer id) {
      usersroad.put(id,new Road());
  }
  public void CleanRoad(String id) {
      usersroad.clear();
  }
 
- public void Addelement(String id,Road_Object roadobject) {
+ public void Addelement(Integer id, Road_Object roadobject) {
      if(!usersroad.containsKey(id)) {
          CreateInitialRoad(id);
      }
@@ -40,7 +39,7 @@ public class RoadService {
      road.DeleteElement();
  }
 
- public Road GetRoad(String id) throws RoadNotFound {
+ public Road GetRoad(Integer id) throws RoadNotFound {
      if(!usersroad.containsKey(id)) {
          throw new RoadNotFound("Road doen't exist");
      }

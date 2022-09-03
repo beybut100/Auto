@@ -1,17 +1,25 @@
 package com.example.Auto2.dto.user;
 
-import org.springframework.data.annotation.Id;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
 
+
+@Entity
+@Table(name="Session")
 public class Session {
 
     String login;
     @Id
-    private String id;
+    private Integer id;
+    @Column(name="starttime")
     Date starttime;
+    @Column(name="finishtime")
     Date finishtime=null;
+
+    @Transient
     Location location;
 
     public Location getLocation() {
@@ -22,11 +30,11 @@ public class Session {
         this.location = location;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

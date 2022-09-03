@@ -3,7 +3,6 @@ package com.example.Auto2.controller;
 import com.example.Auto2.controller.request.InfoForAuto;
 import com.example.Auto2.dto.car.Auto;
 import com.example.Auto2.dto.car.AutoAlreadyExists;
-import com.example.Auto2.dto.user.Session;
 import com.example.Auto2.dto.user.SessionNotFound;
 import com.example.Auto2.service.AutoService;
 import com.example.Auto2.service.UserService;
@@ -22,7 +21,7 @@ public class AutoController {
     UserService userService;
 
 @RequestMapping(path="/addautotorepository",headers = "Session")
-    public Auto InsertAutoinRepository(@RequestHeader(name="Session") String id, @RequestBody InfoForAuto info) throws AutoAlreadyExists, SessionNotFound {
+    public Auto InsertAutoinRepository(@RequestHeader(name="Session") Integer id, @RequestBody InfoForAuto info) throws AutoAlreadyExists, SessionNotFound {
     if(!userService.IsExistSession(id)) {
         throw new SessionNotFound("Session not found");
     }
@@ -30,7 +29,7 @@ public class AutoController {
 }
 
 @RequestMapping(path="/start",headers = "Session")
-public void StartGame(@RequestHeader(name="Session") String id) throws SessionNotFound {
+public void StartGame(@RequestHeader(name="Session") Integer id) throws SessionNotFound {
     if(!userService.IsExistSession(id)) {
         throw new SessionNotFound("Session not found");
     }
@@ -38,7 +37,7 @@ public void StartGame(@RequestHeader(name="Session") String id) throws SessionNo
 }
 
 @RequestMapping(path="createnewcar",headers = "Session")
-public void NewAuto(@RequestBody InfoForAuto info,@RequestHeader(name="Session") String id) throws SessionNotFound {
+public void NewAuto(@RequestBody InfoForAuto info,@RequestHeader(name="Session") Integer id) throws SessionNotFound {
     if(!userService.IsExistSession(id)) {
         throw new SessionNotFound("Session not found");
     }
@@ -46,14 +45,14 @@ public void NewAuto(@RequestBody InfoForAuto info,@RequestHeader(name="Session")
 }
 
 @RequestMapping(path="getallcars",headers = "Session")
-public ArrayList<Auto> GetAllcars(@RequestHeader(name="Session") String id) throws SessionNotFound {
+public ArrayList<Auto> GetAllcars(@RequestHeader(name="Session") Integer id) throws SessionNotFound {
     if(!userService.IsExistSession(id)) {
         throw new SessionNotFound("Session not found");
     }
  return   autoService.GetCars(id);
 }
 @RequestMapping(path="/deleteeverything",headers = "Session")
-    public void DeleteAll(@RequestHeader(name="Session") String id) throws SessionNotFound {
+    public void DeleteAll(@RequestHeader(name="Session") Integer id) throws SessionNotFound {
         if(!userService.IsExistSession(id)) {
             throw new SessionNotFound("Session not found");
         }

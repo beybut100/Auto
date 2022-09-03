@@ -28,12 +28,12 @@ public LoginAndPassword Save(@RequestParam String login, @RequestParam String pa
 }
 
 @RequestMapping(path="/CloseSession",method=RequestMethod.POST)
-    public void CloseSession(@RequestParam String id) {
+    public void CloseSession(@RequestParam Integer id) {
     storeregisterform.CloseSession(id);
 }
 
 @RequestMapping(path="/SetLocation/{sessionId}",method=RequestMethod.POST)
-public void SetLocation(@RequestBody Location location, @PathVariable(name="sessionId")String sessionId) throws SessionNotFound {
+public void SetLocation(@RequestBody Location location, @PathVariable(name="sessionId") Integer sessionId) throws SessionNotFound {
         storeregisterform.SetLocation(sessionId,location);
 }
 
@@ -43,7 +43,7 @@ public void SetLocation(@RequestBody Location location, @PathVariable(name="sess
 }
 
 @RequestMapping(path="/users/SetUserData",method=RequestMethod.POST,headers = "Session")
-    public User SaveUser(@RequestBody SetAdditionalUserData set, @RequestHeader ("Session")String session ) throws  SessionNotFound, LocationNotDetectedException {
+    public User SaveUser(@RequestBody SetAdditionalUserData set, @RequestHeader ("Session") Integer session ) throws  SessionNotFound, LocationNotDetectedException {
   return      userservice.SaveUserData(session, set.getEmail());
 }
 

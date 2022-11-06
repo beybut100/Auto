@@ -1,8 +1,11 @@
 package com.example.Auto2.dto.user;
 
 
+import javax.persistence.Id;
+
 public class User {
-    String login;
+    @Id
+   private String login;
     String email;
     Location location;
     public String getLogin() {

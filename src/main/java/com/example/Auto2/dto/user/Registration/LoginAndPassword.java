@@ -1,13 +1,34 @@
 package com.example.Auto2.dto.user.Registration;
 
-import com.example.Auto2.dao.LoginPasswords;
+
 import com.example.Auto2.dto.user.User;
-import org.springframework.stereotype.Service;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+
+@Table(name="LoginAndPassword")
+@Entity
 
 public class LoginAndPassword {
-    User user;
+    @Column(name="login")
     String login;
-   public String password;
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(name="id",columnDefinition = "varchar")
+    String id;
+    
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+@Column(name="password")
+    public String password;
+    @Column(name="hash")
    byte[] salt;
 
     public void setSalt(byte[] salt) {
@@ -33,7 +54,7 @@ public class LoginAndPassword {
     public void setPassword(String password) {
         this.password = password;
     }
-LoginPasswords repository;
+
 
 
     public LoginAndPassword(String login, String password, byte[] salt) {

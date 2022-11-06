@@ -1,7 +1,7 @@
 package com.example.Auto2.service;
 
 import com.example.Auto2.dao.SessionPst;
-import com.example.Auto2.dao.Users;
+import com.example.Auto2.dao.UserPst;
 import com.example.Auto2.dto.user.*;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    Users repository;
+    UserPst repository;
     SessionPst sessionrepository;
 
     public User SaveUserData(Integer sessionid, String email) throws SessionNotFound, LocationNotDetectedException {
@@ -23,7 +23,7 @@ public class UserService {
       throw  new   LocationNotDetectedException("This element doesn't have location");
      }
     User f=new User();
-    return repository.insert(new User(session.getLogin(),email,new Location(session.getLocation().getLatitude(),session.getLocation().getLongitude())));
+    return repository.save(new User(session.getLogin(),email,new Location(session.getLocation().getLatitude(),session.getLocation().getLongitude())));
     }
 
 
@@ -35,16 +35,16 @@ public class UserService {
         this.sessionrepository = sessionrepository;
     }
 
-    public UserService(Users repository, SessionPst sessionrepository) {
+    public UserService(UserPst repository, SessionPst sessionrepository) {
         this.repository = repository;
         this.sessionrepository = sessionrepository;
     }
 
-    public Users getRepository() {
+    public UserPst getRepository() {
         return repository;
     }
 
-    public void setRepository(Users repository) {
+    public void setRepository(UserPst repository) {
         this.repository = repository;
     }
 

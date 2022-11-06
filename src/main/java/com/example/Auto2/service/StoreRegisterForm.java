@@ -1,8 +1,8 @@
 package com.example.Auto2.service;
 
-import com.example.Auto2.dao.LoginPasswords;
+import com.example.Auto2.dao.LoginPasswordsPst;
 import com.example.Auto2.dao.SessionPst;
-import com.example.Auto2.dao.Users;
+import com.example.Auto2.dao.UserPst;
 import com.example.Auto2.dto.user.Location;
 import com.example.Auto2.dto.user.Registration.*;
 import com.example.Auto2.dto.user.Session;
@@ -20,10 +20,10 @@ import java.util.regex.Pattern;
 
 @Service
 public class StoreRegisterForm {
-    LoginPasswords logpassRepository;
+    LoginPasswordsPst logpassRepository;
     Hashing hashing;
     SessionPst sessionsRepository;
-    Users users;
+    UserPst users;
 
 
     /* Method that limits variants of password */
@@ -83,7 +83,7 @@ public class StoreRegisterForm {
 
     public LoginAndPassword SaveRegForm(String login, String password) throws NoSuchAlgorithmException, InvalidPassword, InvalidLogin {
 
-        return logpassRepository.insert(SaveLoginPassword(login,password));
+        return logpassRepository.save(SaveLoginPassword(login,password));
     }
     public Session getAuthorized(String login, String Password) throws UserNotFound,IncorrectPassword {
         Optional<LoginAndPassword> element= logpassRepository.getFirstByLogin(login);
@@ -115,16 +115,17 @@ public class StoreRegisterForm {
          Session upelem= elem.get();
 
          upelem.setLocation(location);
-         sessionsRepository.(upelem);
+         sessionsRepository.save(upelem);
         }
         public void DeleteOldSessions(int seconds) {
             Date timetodelete=new Date(System.currentTimeMillis()-seconds*1000);
-        //    sessionsRepository.deleteByFinishtimeLessThan(timetodelete);
+            System.out.println(timetodelete);
+           sessionsRepository.deleteByFinishtimeLessThan(timetodelete);
         }
 
 
 @Autowired
-public StoreRegisterForm(LoginPasswords logpassRepository,SessionPst sessionsRepository ) throws NoSuchAlgorithmException, InvalidPassword, InvalidLogin  {
+public StoreRegisterForm(LoginPasswordsPst logpassRepository, SessionPst sessionsRepository ) throws NoSuchAlgorithmException, InvalidPassword, InvalidLogin  {
         this.logpassRepository = logpassRepository;
         this.sessionsRepository=sessionsRepository;
         this.users=users;
